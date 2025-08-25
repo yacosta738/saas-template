@@ -79,6 +79,7 @@ Guidelines:
 - Place the emoji after the type/scope prefix or at the start of the description. Keep messages readable by humans and machines (Conventional Commits must still be parseable).
 - Use at most one emoji per commit header.
 - Do not replace the Conventional Commit `type(scope): description` contract — the emoji is decorative and optional, not a substitute for the `type`.
+- Refer to [commitlint.config.mjs](../../commitlint.config.mjs) for the enforced commit message rules.
 
 Recommended emoji mapping and examples:
 
