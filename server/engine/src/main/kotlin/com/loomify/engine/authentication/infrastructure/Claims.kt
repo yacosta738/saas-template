@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
  * @since 1.0.0
  */
 object Claims {
-    const val CLAIMS_NAMESPACE = "https://www.example.com/"
+    const val CLAIMS_NAMESPACE = "https://www.loomify.com/"
 
     /**
      * Extracts a list of granted authorities from the claims provided.

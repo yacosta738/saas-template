@@ -3,7 +3,7 @@
 	"description": "loomify shared configuration",
 	"version": "0.0.1",
 	"type": "module",
-	"license": "loomify Custom License",
+	"license": "MIT",
 	"homepage": "https://loomify.tech",
 	"author": "loomify Team",
 	"keywords": [

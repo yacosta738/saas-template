@@ -4,7 +4,7 @@
 	"description": "loomify Monorepo",
 	"private": true,
 	"type": "module",
-	"license": "loomify Custom License",
+	"license": "MIT",
 	"homepage": "https://loomify.tech",
 	"author": "loomify Team",
 	"keywords": [

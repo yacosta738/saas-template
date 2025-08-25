@@ -3,7 +3,7 @@
 > This document defines the project's testing strategy, outlining the different types of tests and their purpose.
 
 ## The Testing Pyramid
-
+![The Testing Pyramid](The%20Testing%20Pyramid.png)
 We follow the principles of the testing pyramid to ensure a balanced and effective testing portfolio. The pyramid consists of three main layers:
 
 1.  **Unit Tests (Base)**: The largest number of tests. They are fast, isolated, and verify small pieces of code (e.g., a single function or component).

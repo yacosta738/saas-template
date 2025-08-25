@@ -23,7 +23,8 @@
 
 ## UI Components
 
-- Use **Shadcn-Vue** as the primary UI component library.
+- Use **Shadcn-Vue** as the primary UI component library (`src/components/ui`). Use the components as provided, customizing styles via props or CSS variables.
+- Create custom components only when necessary (e.g., for unique functionality or complex interactions).
 - Prefer composing functionality with slots over complex props.
 - Ensure all interactive components are accessible (a11y).
 

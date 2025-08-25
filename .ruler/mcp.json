@@ -48,24 +48,6 @@
 				"mcp/filesystem"
 			]
 		},
-		"github": {
-			"command": "docker",
-			"args": [
-				"run",
-				"--rm",
-				"-i",
-				"--name",
-				"mcp-github",
-				"--read-only",
-				"--cap-drop=ALL",
-				"--security-opt=no-new-privileges",
-				"-e",
-				"GITHUB_TOKEN",
-				"-v",
-				"mcp-github-cache:/tmp/cache",
-				"mcp/github"
-			]
-		},
 		"git": {
 			"command": "npx",
 			"args": ["-y", "@modelcontextprotocol/server-git", "--repository", "."]

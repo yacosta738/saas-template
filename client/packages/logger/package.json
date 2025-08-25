@@ -2,7 +2,7 @@
 	"name": "@loomify/logger",
 	"version": "0.0.1",
 	"description": "A lightweight, powerful, and universal TypeScript logging library for loomify",
-	"license": "loomify Custom License",
+	"license": "MIT",
 	"type": "module",
 	"homepage": "https://loomify.tech",
 	"author": "loomify Team",
