@@ -35,7 +35,7 @@
 	"scripts": {
 		"update-deps": "pnpm update -i -r --latest",
 		"preinstall": "npx only-allow pnpm",
-		"prepare": "pnpm exec lefthook install",
+		"prepare": "pnpm exec lefthook install && pnpm run ruler:apply",
 		"ruler:check": "ruler check",
 		"ruler:apply": "ruler apply",
 		"dev": "pnpm run ruler:check && pnpm --recursive --parallel run dev",
