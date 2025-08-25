@@ -16,6 +16,7 @@ Keycloak runs as a Docker container via Docker Compose.
 ### How to Start
 
 From the project root, run:
+
 ```bash
 docker compose up -d keycloak
 ```
@@ -55,12 +56,16 @@ spring:
 
 If you make changes to the realm via the admin console, you must export the configuration to persist it:
 
-1.  Execute the export command:
+1. Execute the export command:
+
     ```bash
     docker exec -it keycloak /opt/keycloak/bin/kc.sh export --realm loomify --file /tmp/loomify-realm.json
     ```
-2.  Copy the file from the container to your local machine:
+
+2. Copy the file from the container to your local machine:
+
     ```bash
     docker cp keycloak:/tmp/loomify-realm.json infra/keycloak/realm-config/loomify-realm.json
     ```
-3.  Commit the updated `loomify-realm.json` file.
+
+3. Commit the updated `loomify-realm.json` file.

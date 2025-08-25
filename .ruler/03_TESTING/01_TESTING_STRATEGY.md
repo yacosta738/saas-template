@@ -3,12 +3,13 @@
 > This document defines the project's testing strategy, outlining the different types of tests and their purpose.
 
 ## The Testing Pyramid
+
 ![The Testing Pyramid](The%20Testing%20Pyramid.png)
 We follow the principles of the testing pyramid to ensure a balanced and effective testing portfolio. The pyramid consists of three main layers:
 
-1.  **Unit Tests (Base)**: The largest number of tests. They are fast, isolated, and verify small pieces of code (e.g., a single function or component).
-2.  **Integration Tests (Middle)**: Fewer than unit tests. They verify that different parts of the system work together correctly (e.g., a service interacting with a database).
-3.  **End-to-End (E2E) Tests (Top)**: The smallest number of tests. They simulate a full user journey through the application and are the slowest and most brittle.
+1. **Unit Tests (Base)**: The largest number of tests. They are fast, isolated, and verify small pieces of code (e.g., a single function or component).
+2. **Integration Tests (Middle)**: Fewer than unit tests. They verify that different parts of the system work together correctly (e.g., a service interacting with a database).
+3. **End-to-End (E2E) Tests (Top)**: The smallest number of tests. They simulate a full user journey through the application and are the slowest and most brittle.
 
 ## Unit Tests
 

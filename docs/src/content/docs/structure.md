@@ -85,7 +85,8 @@ description: Overview of the project structure and organization.
 │   │   └───04_HTML_CSS_CONVENTIONS.md
 │   ├───03_TESTING/
 │   │   ├───01_TESTING_STRATEGY.md
-│   │   └───02_PLAYWRIGHT_GUIDELINES.md
+│   │   ├───02_PLAYWRIGHT_GUIDELINES.md
+│   │   └───The Testing Pyramid.png
 │   ├───04_DEVOPS/
 │   │   ├───01_CI_CD_BEST_PRACTICES.md
 │   │   ├───02_SECURITY_PRACTICES.md
@@ -1477,8 +1478,301 @@ description: Overview of the project structure and organization.
 ├───server/
 │   └───engine/
 │       ├───build/
+│       │   ├───classes/
+│       │   │   └───kotlin/
+│       │   │       ├───main/
+│       │   │       │   ├───META-INF/
+│       │   │       │   │   └───engine.kotlin_module
+│       │   │       │   └───com/
+│       │   │       │       └───loomify/
+│       │   │       │           └───...
+│       │   │       └───test/
+│       │   │           ├───META-INF/
+│       │   │           │   └───engine_test.kotlin_module
+│       │   │           └───com/
+│       │   │               └───loomify/
+│       │   │                   └───...
+│       │   ├───kotlin/
+│       │   │   ├───compileKotlin/
+│       │   │   │   ├───cacheable/
+│       │   │   │   │   ├───caches-jvm/
+│       │   │   │   │   │   ├───inputs/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   ├───jvm/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   └───lookups/
+│       │   │   │   │   │       └───...
+│       │   │   │   │   └───last-build.bin
+│       │   │   │   ├───classpath-snapshot/
+│       │   │   │   │   └───shrunk-classpath-snapshot.bin
+│       │   │   │   └───local-state/
+│       │   │   │       └───build-history.bin
+│       │   │   └───compileTestKotlin/
+│       │   │       ├───cacheable/
+│       │   │       │   ├───caches-jvm/
+│       │   │       │   │   ├───inputs/
+│       │   │       │   │   │   └───...
+│       │   │       │   │   ├───jvm/
+│       │   │       │   │   │   └───...
+│       │   │       │   │   └───lookups/
+│       │   │       │   │       └───...
+│       │   │       │   └───last-build.bin
+│       │   │       ├───classpath-snapshot/
+│       │   │       │   └───shrunk-classpath-snapshot.bin
+│       │   │       └───local-state/
+│       │   │           └───build-history.bin
+│       │   ├───kover/
+│       │   │   ├───bin-reports/
+│       │   │   │   ├───coverage-error.log
+│       │   │   │   └───test.ic
+│       │   │   └───kover-jvm-agent-0.8.3.jar
+│       │   ├───libs/
+│       │   │   └───engine-0.0.1-SNAPSHOT-plain.jar
+│       │   ├───reports/
+│       │   │   └───tests/
+│       │   │       └───test/
+│       │   │           ├───classes/
+│       │   │           │   ├───com.loomify.ApplicationStartupTracesTest.html
+│       │   │           │   ├───com.loomify.ArchTest.html
+│       │   │           │   ├───com.loomify.engine.BeanValidationTest.html
+│       │   │           │   ├───com.loomify.engine.LoomifyApplicationTests.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.AuthenticateUserQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserAttributesTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserRolesTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserUsernameTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.RefreshTokenQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.UserAuthenticatorServiceTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.logout.UserLogoutCommandHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.query.GetUserSessionQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.domain.RoleTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.domain.RolesTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.domain.UsernameTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.ApplicationSecurityPropertiesTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.AudienceValidatorTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.AuthenticationExceptionAdviceIT.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.ClaimsTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.CustomClaimConverterTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.JwtGrantedAuthorityConverterTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.SecurityConfigurationIT.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.csrf.SpaCsrfTokenRequestHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.RefreshTokenControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.RefreshTokenControllerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.SessionControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.SessionControllerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.UserAuthenticatorControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.UserAuthenticatorControllerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.UserLogoutControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.UserLogoutControllerTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.mapper.AccessTokenResponseMapperTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakAuthenticatorRepositoryIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakAuthenticatorRepositoryTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakLogoutRepositoryIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakRefreshTokenManagerRepositoryIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakRefreshTokenManagerRepositoryTest.html
+│       │   │           │   ├───com.loomify.engine.config.SpaWebFilterTest.html
+│       │   │           │   ├───com.loomify.engine.config.StringToFilterConditionConverterTest.html
+│       │   │           │   ├───com.loomify.engine.config.info.ActiveProfilesInfoContributorTest.html
+│       │   │           │   ├───com.loomify.engine.controllers.GlobalExceptionHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.users.application.UserRegistratorTest$EdgeCasesAndBoundaryTests.html
+│       │   │           │   ├───com.loomify.engine.users.application.UserRegistratorTest$IntegrationTestsWithRealImplementations.html
+│       │   │           │   ├───com.loomify.engine.users.application.UserRegistratorTest$UnitTestsWithMockedDependencies.html
+│       │   │           │   ├───com.loomify.engine.users.application.register.RegisterUserCommandHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.users.domain.UserTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.AccountResourceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.AccountResourceCookieAuthIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.UserRegisterControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$CommandHandlerErrorTests.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$EdgeCaseTests.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$SuccessfulRegistrationTests.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$ValidationErrorTests.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.persistence.keycloak.KeycloakRepositoryIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.persistence.keycloak.KeycloakRepositoryTest.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.service.AccountResourceServiceTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.create.CreateWorkspaceCommandHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.delete.DeleteWorkspaceCommandHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.FindWorkspaceQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.all.AllWorkspaceQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.member.AllWorkspaceByMemberQueryHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.security.WorkspaceAuthorizationServiceTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.update.UpdateWorkspaceCommandHandlerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.domain.WorkspaceTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.event.consumer.CreateDefaultWorkspaceOnUserCreationIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.event.consumer.CreateDefaultWorkspaceOnUserCreationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.CreateWorkspaceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.CreateWorkspaceControllerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.DeleteWorkspaceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.DeleteWorkspaceControllerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.FindWorkspaceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.FindWorkspaceControllerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.GetAllWorkspaceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.GetAllWorkspaceControllerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.UpdateWorkspaceControllerIntegrationTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.UpdateWorkspaceControllerTest.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.persistence.WorkspaceStoreR2DbcRepositoryTest.html
+│       │   │           │   └───com.loomify.engine.workspace.infrastructure.persistence.mapper.WorkspaceMemberMapperTest.html
+│       │   │           ├───css/
+│       │   │           │   ├───base-style.css
+│       │   │           │   └───style.css
+│       │   │           ├───js/
+│       │   │           │   └───report.js
+│       │   │           ├───packages/
+│       │   │           │   ├───com.loomify.engine.authentication.application.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.logout.html
+│       │   │           │   ├───com.loomify.engine.authentication.application.query.html
+│       │   │           │   ├───com.loomify.engine.authentication.domain.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.csrf.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.http.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.mapper.html
+│       │   │           │   ├───com.loomify.engine.authentication.infrastructure.persistence.keycloak.html
+│       │   │           │   ├───com.loomify.engine.config.html
+│       │   │           │   ├───com.loomify.engine.config.info.html
+│       │   │           │   ├───com.loomify.engine.controllers.html
+│       │   │           │   ├───com.loomify.engine.html
+│       │   │           │   ├───com.loomify.engine.users.application.html
+│       │   │           │   ├───com.loomify.engine.users.application.register.html
+│       │   │           │   ├───com.loomify.engine.users.domain.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.http.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.persistence.keycloak.html
+│       │   │           │   ├───com.loomify.engine.users.infrastructure.service.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.create.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.delete.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.all.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.find.member.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.security.html
+│       │   │           │   ├───com.loomify.engine.workspace.application.update.html
+│       │   │           │   ├───com.loomify.engine.workspace.domain.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.event.consumer.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.http.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.persistence.html
+│       │   │           │   ├───com.loomify.engine.workspace.infrastructure.persistence.mapper.html
+│       │   │           │   └───com.loomify.html
+│       │   │           └───index.html
+│       │   ├───resources/
+│       │   │   ├───main/
+│       │   │   │   ├───db/
+│       │   │   │   │   ├───changelog/
+│       │   │   │   │   │   ├───data/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   ├───migrations/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   └───master.yaml
+│       │   │   │   │   └───README.md
+│       │   │   │   ├───i18n/
+│       │   │   │   ├───tls/
+│       │   │   │   │   └───server.p12
+│       │   │   │   ├───application-dev.yml
+│       │   │   │   ├───application-tls.yml
+│       │   │   │   ├───application.yml
+│       │   │   │   ├───banner.txt
+│       │   │   │   ├───git.properties
+│       │   │   │   └───logback-spring.xml
+│       │   │   └───test/
+│       │   │       ├───db/
+│       │   │       │   ├───user/
+│       │   │       │   │   ├───clean.sql
+│       │   │       │   │   └───users.sql
+│       │   │       │   └───workspace/
+│       │   │       │       ├───all-workspaces.sql
+│       │   │       │       ├───clean.sql
+│       │   │       │       └───workspace.sql
+│       │   │       ├───keycloak/
+│       │   │       │   └───demo-realm-test.json
+│       │   │       ├───ssl/
+│       │   │       │   ├───cert.pem
+│       │   │       │   ├───key.pem
+│       │   │       │   └───keystore.p12
+│       │   │       └───application-test.yml
+│       │   ├───test-results/
+│       │   │   └───test/
+│       │   │       ├───binary/
+│       │   │       │   ├───output.bin
+│       │   │       │   ├───output.bin.idx
+│       │   │       │   └───results.bin
+│       │   │       ├───TEST-com.loomify.ApplicationStartupTracesTest.xml
+│       │   │       ├───TEST-com.loomify.ArchTest.xml
+│       │   │       ├───TEST-com.loomify.engine.BeanValidationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.LoomifyApplicationTests.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.AuthenticateUserQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserAttributesTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserRolesTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.AuthenticatedUserTest$AuthenticatedUserUsernameTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.RefreshTokenQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.UserAuthenticatorServiceTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.logout.UserLogoutCommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.application.query.GetUserSessionQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.domain.RoleTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.domain.RolesTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.domain.UsernameTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.ApplicationSecurityPropertiesTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.AudienceValidatorTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.AuthenticationExceptionAdviceIT.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.ClaimsTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.CustomClaimConverterTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.JwtGrantedAuthorityConverterTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.SecurityConfigurationIT.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.csrf.SpaCsrfTokenRequestHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.RefreshTokenControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.RefreshTokenControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.SessionControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.SessionControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.UserAuthenticatorControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.UserAuthenticatorControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.UserLogoutControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.http.UserLogoutControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.mapper.AccessTokenResponseMapperTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakAuthenticatorRepositoryIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakAuthenticatorRepositoryTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakLogoutRepositoryIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakRefreshTokenManagerRepositoryIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.authentication.infrastructure.persistence.keycloak.KeycloakRefreshTokenManagerRepositoryTest.xml
+│       │   │       ├───TEST-com.loomify.engine.config.SpaWebFilterTest.xml
+│       │   │       ├───TEST-com.loomify.engine.config.StringToFilterConditionConverterTest.xml
+│       │   │       ├───TEST-com.loomify.engine.config.info.ActiveProfilesInfoContributorTest.xml
+│       │   │       ├───TEST-com.loomify.engine.controllers.GlobalExceptionHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.application.UserRegistratorTest$EdgeCasesAndBoundaryTests.xml
+│       │   │       ├───TEST-com.loomify.engine.users.application.UserRegistratorTest$IntegrationTestsWithRealImplementations.xml
+│       │   │       ├───TEST-com.loomify.engine.users.application.UserRegistratorTest$UnitTestsWithMockedDependencies.xml
+│       │   │       ├───TEST-com.loomify.engine.users.application.register.RegisterUserCommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.domain.UserTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.AccountResourceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.AccountResourceCookieAuthIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.UserRegisterControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$CommandHandlerErrorTests.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$EdgeCaseTests.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$SuccessfulRegistrationTests.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.http.UserRegisterControllerTest$ValidationErrorTests.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.persistence.keycloak.KeycloakRepositoryIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.persistence.keycloak.KeycloakRepositoryTest.xml
+│       │   │       ├───TEST-com.loomify.engine.users.infrastructure.service.AccountResourceServiceTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.create.CreateWorkspaceCommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.delete.DeleteWorkspaceCommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.find.FindWorkspaceQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.find.all.AllWorkspaceQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.find.member.AllWorkspaceByMemberQueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.security.WorkspaceAuthorizationServiceTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.application.update.UpdateWorkspaceCommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.domain.WorkspaceTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.event.consumer.CreateDefaultWorkspaceOnUserCreationIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.event.consumer.CreateDefaultWorkspaceOnUserCreationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.CreateWorkspaceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.CreateWorkspaceControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.DeleteWorkspaceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.DeleteWorkspaceControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.FindWorkspaceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.FindWorkspaceControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.GetAllWorkspaceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.GetAllWorkspaceControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.UpdateWorkspaceControllerIntegrationTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.http.UpdateWorkspaceControllerTest.xml
+│       │   │       ├───TEST-com.loomify.engine.workspace.infrastructure.persistence.WorkspaceStoreR2DbcRepositoryTest.xml
+│       │   │       └───TEST-com.loomify.engine.workspace.infrastructure.persistence.mapper.WorkspaceMemberMapperTest.xml
 │       │   └───tmp/
+│       │       ├───jar/
+│       │       │   └───MANIFEST.MF
 │       │       └───test/
+│       │           └───kover-agent.args
 │       ├───src/
 │       │   ├───main/
 │       │   │   ├───kotlin/
@@ -1537,6 +1831,129 @@ description: Overview of the project structure and organization.
 │       └───engine.gradle.kts
 ├───shared/
 │   ├───common/
+│   │   ├───build/
+│   │   │   ├───classes/
+│   │   │   │   └───kotlin/
+│   │   │   │       ├───main/
+│   │   │   │       │   ├───META-INF/
+│   │   │   │       │   │   └───common.kotlin_module
+│   │   │   │       │   └───com/
+│   │   │   │       │       └───loomify/
+│   │   │   │       │           └───...
+│   │   │   │       └───test/
+│   │   │   │           ├───META-INF/
+│   │   │   │           │   └───common_test.kotlin_module
+│   │   │   │           └───com/
+│   │   │   │               └───loomify/
+│   │   │   │                   └───...
+│   │   │   ├───kotlin/
+│   │   │   │   ├───compileKotlin/
+│   │   │   │   │   ├───cacheable/
+│   │   │   │   │   │   ├───caches-jvm/
+│   │   │   │   │   │   │   ├───inputs/
+│   │   │   │   │   │   │   │   └───...
+│   │   │   │   │   │   │   ├───jvm/
+│   │   │   │   │   │   │   │   └───...
+│   │   │   │   │   │   │   └───lookups/
+│   │   │   │   │   │   │       └───...
+│   │   │   │   │   │   └───last-build.bin
+│   │   │   │   │   └───classpath-snapshot/
+│   │   │   │   │       └───shrunk-classpath-snapshot.bin
+│   │   │   │   └───compileTestKotlin/
+│   │   │   │       ├───cacheable/
+│   │   │   │       │   ├───caches-jvm/
+│   │   │   │       │   │   ├───inputs/
+│   │   │   │       │   │   │   └───...
+│   │   │   │       │   │   ├───jvm/
+│   │   │   │       │   │   │   └───...
+│   │   │   │       │   │   └───lookups/
+│   │   │   │       │   │       └───...
+│   │   │   │       │   └───last-build.bin
+│   │   │   │       └───classpath-snapshot/
+│   │   │   │           └───shrunk-classpath-snapshot.bin
+│   │   │   ├───kover/
+│   │   │   │   ├───bin-reports/
+│   │   │   │   │   └───test.ic
+│   │   │   │   └───kover-jvm-agent-0.8.3.jar
+│   │   │   ├───libs/
+│   │   │   │   └───common-1.15.1.jar
+│   │   │   ├───reports/
+│   │   │   │   └───tests/
+│   │   │   │       └───test/
+│   │   │   │           ├───classes/
+│   │   │   │           │   ├───com.loomify.common.domain.MemoizersTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.CommandHandlerTest$ParameterizedTests.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.CommandHandlerTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.CommandWithResultHandlerTest$ParamaterizedTests.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.CommandWithResultHandlerTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.MediatorBuilderTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.NotificationHandlerTest$ParamaterizedTests.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.NotificationHandlerTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.PipelineBehaviorTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.QueryHandlerTest$ParamaterizedTests.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.QueryHandlerTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.event.EventMultiplexerTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.criteria.CriteriaTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.criteria.RuntimeCriteriaParserTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.presentation.pagination.RequestPageableTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.presentation.pagination.TimestampCursorTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.presentation.sort.SortTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.regexp.TokenTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.credential.CredentialTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.email.EmailTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.name.FirstNameTest.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.name.LastNameTest.html
+│   │   │   │           │   └───com.loomify.common.domain.vo.name.NameTest.html
+│   │   │   │           ├───css/
+│   │   │   │           │   ├───base-style.css
+│   │   │   │           │   └───style.css
+│   │   │   │           ├───js/
+│   │   │   │           │   └───report.js
+│   │   │   │           ├───packages/
+│   │   │   │           │   ├───com.loomify.common.domain.bus.event.html
+│   │   │   │           │   ├───com.loomify.common.domain.bus.html
+│   │   │   │           │   ├───com.loomify.common.domain.criteria.html
+│   │   │   │           │   ├───com.loomify.common.domain.html
+│   │   │   │           │   ├───com.loomify.common.domain.presentation.pagination.html
+│   │   │   │           │   ├───com.loomify.common.domain.presentation.sort.html
+│   │   │   │           │   ├───com.loomify.common.domain.regexp.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.credential.html
+│   │   │   │           │   ├───com.loomify.common.domain.vo.email.html
+│   │   │   │           │   └───com.loomify.common.domain.vo.name.html
+│   │   │   │           └───index.html
+│   │   │   ├───test-results/
+│   │   │   │   └───test/
+│   │   │   │       ├───binary/
+│   │   │   │       │   ├───output.bin
+│   │   │   │       │   ├───output.bin.idx
+│   │   │   │       │   └───results.bin
+│   │   │   │       ├───TEST-com.loomify.common.domain.MemoizersTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.CommandHandlerTest$ParameterizedTests.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.CommandHandlerTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.CommandWithResultHandlerTest$ParamaterizedTests.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.CommandWithResultHandlerTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.MediatorBuilderTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.NotificationHandlerTest$ParamaterizedTests.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.NotificationHandlerTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.PipelineBehaviorTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.QueryHandlerTest$ParamaterizedTests.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.QueryHandlerTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.bus.event.EventMultiplexerTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.criteria.CriteriaTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.criteria.RuntimeCriteriaParserTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.presentation.pagination.RequestPageableTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.presentation.pagination.TimestampCursorTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.presentation.sort.SortTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.regexp.TokenTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.vo.credential.CredentialTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.vo.email.EmailTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.vo.name.FirstNameTest.xml
+│   │   │   │       ├───TEST-com.loomify.common.domain.vo.name.LastNameTest.xml
+│   │   │   │       └───TEST-com.loomify.common.domain.vo.name.NameTest.xml
+│   │   │   └───tmp/
+│   │   │       ├───jar/
+│   │   │       │   └───MANIFEST.MF
+│   │   │       └───test/
 │   │   ├───src/
 │   │   │   ├───main/
 │   │   │   │   └───kotlin/
@@ -1559,7 +1976,111 @@ description: Overview of the project structure and organization.
 │   │   └───build.gradle.kts
 │   └───spring-boot-common/
 │       ├───build/
+│       │   ├───classes/
+│       │   │   └───kotlin/
+│       │   │       ├───main/
+│       │   │       │   ├───META-INF/
+│       │   │       │   │   └───spring-boot-common.kotlin_module
+│       │   │       │   └───com/
+│       │   │       │       └───loomify/
+│       │   │       │           └───...
+│       │   │       └───test/
+│       │   │           ├───META-INF/
+│       │   │           │   └───spring-boot-common_test.kotlin_module
+│       │   │           └───com/
+│       │   │               └───loomify/
+│       │   │                   └───...
+│       │   ├───kotlin/
+│       │   │   ├───compileKotlin/
+│       │   │   │   ├───cacheable/
+│       │   │   │   │   ├───caches-jvm/
+│       │   │   │   │   │   ├───inputs/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   ├───jvm/
+│       │   │   │   │   │   │   └───...
+│       │   │   │   │   │   └───lookups/
+│       │   │   │   │   │       └───...
+│       │   │   │   │   └───last-build.bin
+│       │   │   │   └───classpath-snapshot/
+│       │   │   │       └───shrunk-classpath-snapshot.bin
+│       │   │   └───compileTestKotlin/
+│       │   │       ├───cacheable/
+│       │   │       │   ├───caches-jvm/
+│       │   │       │   │   ├───inputs/
+│       │   │       │   │   │   └───...
+│       │   │       │   │   ├───jvm/
+│       │   │       │   │   │   └───...
+│       │   │       │   │   └───lookups/
+│       │   │       │   │       └───...
+│       │   │       │   └───last-build.bin
+│       │   │       └───classpath-snapshot/
+│       │   │           └───shrunk-classpath-snapshot.bin
+│       │   ├───kover/
+│       │   │   ├───bin-reports/
+│       │   │   │   └───test.ic
+│       │   │   └───kover-jvm-agent-0.8.3.jar
+│       │   ├───libs/
+│       │   │   └───spring-boot-common-1.15.1.jar
+│       │   ├───reports/
+│       │   │   └───tests/
+│       │   │       └───test/
+│       │   │           ├───classes/
+│       │   │           │   ├───com.loomify.spring.boot.CommandHandlerTest.html
+│       │   │           │   ├───com.loomify.spring.boot.CommandWithResultHandlerTest.html
+│       │   │           │   ├───com.loomify.spring.boot.NotificationHandlerTest.html
+│       │   │           │   ├───com.loomify.spring.boot.PipelineBehaviorTest.html
+│       │   │           │   ├───com.loomify.spring.boot.QueryHandlerTest.html
+│       │   │           │   ├───com.loomify.spring.boot.SpringContextTest.html
+│       │   │           │   ├───com.loomify.spring.boot.bus.event.EventConfigurationTest.html
+│       │   │           │   ├───com.loomify.spring.boot.bus.event.EventEmitterTest.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.filter.RHSFilterParserTest.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.pagination.PageResponsePresenterTest.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.sort.SortParserFactoryTest.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.sort.SortParserTest.html
+│       │   │           │   ├───com.loomify.spring.boot.repository.R2DBCCriteriaParserTest.html
+│       │   │           │   └───com.loomify.spring.boot.repository.ReactiveSearchRepositoryImplTest.html
+│       │   │           ├───css/
+│       │   │           │   ├───base-style.css
+│       │   │           │   └───style.css
+│       │   │           ├───js/
+│       │   │           │   └───report.js
+│       │   │           ├───packages/
+│       │   │           │   ├───com.loomify.spring.boot.bus.event.html
+│       │   │           │   ├───com.loomify.spring.boot.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.filter.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.pagination.html
+│       │   │           │   ├───com.loomify.spring.boot.presentation.sort.html
+│       │   │           │   └───com.loomify.spring.boot.repository.html
+│       │   │           └───index.html
+│       │   ├───resources/
+│       │   │   └───main/
+│       │   │       └───META-INF/
+│       │   │           ├───spring/
+│       │   │           │   └───org.springframework.boot.autoconfigure.AutoConfiguration.imports
+│       │   │           └───spring.factory
+│       │   ├───test-results/
+│       │   │   └───test/
+│       │   │       ├───binary/
+│       │   │       │   ├───output.bin
+│       │   │       │   ├───output.bin.idx
+│       │   │       │   └───results.bin
+│       │   │       ├───TEST-com.loomify.spring.boot.CommandHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.CommandWithResultHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.NotificationHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.PipelineBehaviorTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.QueryHandlerTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.SpringContextTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.bus.event.EventConfigurationTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.bus.event.EventEmitterTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.presentation.filter.RHSFilterParserTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.presentation.pagination.PageResponsePresenterTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.presentation.sort.SortParserFactoryTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.presentation.sort.SortParserTest.xml
+│       │   │       ├───TEST-com.loomify.spring.boot.repository.R2DBCCriteriaParserTest.xml
+│       │   │       └───TEST-com.loomify.spring.boot.repository.ReactiveSearchRepositoryImplTest.xml
 │       │   └───tmp/
+│       │       ├───jar/
+│       │       │   └───MANIFEST.MF
 │       │       └───test/
 │       ├───src/
 │       │   ├───main/

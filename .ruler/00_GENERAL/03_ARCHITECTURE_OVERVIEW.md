@@ -22,6 +22,6 @@ Each feature is self-contained and follows this standard structure:
 
 ### Layers
 
-1.  **`domain`**: The core, containing pure Kotlin entities, value objects, domain events, exceptions, and repository interfaces.
-2.  **`application`**: Implements CQRS with command and query handlers that orchestrate domain logic. This layer is framework-independent.
-3.  **`infrastructure`**: The outermost layer, implementing adapters for HTTP (controllers), persistence (R2DBC repositories), and other external services. This is the only layer allowed to use framework-specific features.
+1. **`domain`**: The core, containing pure Kotlin entities, value objects, domain events, exceptions, and repository interfaces.
+2. **`application`**: Implements CQRS with command and query handlers that orchestrate domain logic. This layer is framework-independent.
+3. **`infrastructure`**: The outermost layer, implementing adapters for HTTP (controllers), persistence (R2DBC repositories), and other external services. This is the only layer allowed to use framework-specific features.

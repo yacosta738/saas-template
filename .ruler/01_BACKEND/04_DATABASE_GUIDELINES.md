@@ -15,13 +15,16 @@ RLS is a PostgreSQL feature used to enforce that queries automatically filter ro
 
 ### RLS Pattern
 
-1.  **Tenant Column**: Add a `tenant_id UUID NOT NULL` column to all tenant-scoped tables.
-2.  **Enable RLS**: Enable RLS on the table:
+1. **Tenant Column**: Add a `tenant_id UUID NOT NULL` column to all tenant-scoped tables.
+2. **Enable RLS**: Enable RLS on the table:
+
     ```sql
     ALTER TABLE my_table ENABLE ROW LEVEL SECURITY;
     ALTER TABLE my_table FORCE ROW LEVEL SECURITY;
     ```
-3.  **Create Policy**: Create a policy that checks the `tenant_id` against a session variable.
+
+3. **Create Policy**: Create a policy that checks the `tenant_id` against a session variable.
+
     ```sql
     CREATE POLICY tenant_isolation ON my_table
       USING (tenant_id = current_setting('app.current_tenant', true)::uuid)
@@ -43,6 +46,7 @@ COMMIT;
 ### Performance
 
 - **Indexing**: Always create an index on the columns used in RLS policies (e.g., `tenant_id`).
+
   ```sql
   CREATE INDEX IF NOT EXISTS idx_my_table_tenant_id ON my_table (tenant_id);
   ```

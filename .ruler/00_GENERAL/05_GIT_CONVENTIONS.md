@@ -23,7 +23,7 @@ We adhere to the [Conventional Commits](https://www.conventionalcommits.org/en/v
 
 The commit message should be structured as follows:
 
-```
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -60,11 +60,53 @@ The description contains a concise summary of the change.
 
 ### Example Commits
 
-```
+```text
 feat(auth): add password reset functionality
 ```
-```
+
+```text
 fix(api): correct pagination query parameter
 
 Closes #123
 ```
+
+## Commit emojis
+
+We encourage adding a single, standard Unicode emoji supported by GitHub and GitLab to commit messages to make PRs and changelogs more scannable. Emojis must be plain Unicode (not images) so both GitHub and GitLab render them correctly.
+
+Guidelines:
+
+- Place the emoji after the type/scope prefix or at the start of the description. Keep messages readable by humans and machines (Conventional Commits must still be parseable).
+- Use at most one emoji per commit header.
+- Do not replace the Conventional Commit `type(scope): description` contract — the emoji is decorative and optional, not a substitute for the `type`.
+
+Recommended emoji mapping and examples:
+
+- feat: ✨ (sparkles)
+  - Example: `feat(auth): ✨ add password reset functionality`
+- fix: 🐛 (bug)
+  - Example: `fix(api): 🐛 correct pagination query parameter`
+- docs: 📝 (memo)
+  - Example: `docs(readme): 📝 update quickstart instructions`
+- style: 🎨 (art)
+  - Example: `style(ui): 🎨 tidy CSS and fix spacing`
+- refactor: ♻️ (recycle)
+  - Example: `refactor(core): ♻️ extract user service`
+- perf: 🚀 (rocket)
+  - Example: `perf(cache): 🚀 improve lookup throughput`
+- test: 🧪 (white_check_mark)
+  - Example: `test(api): 🧪 add integration test for pagination`
+- build / deps: 📦 (package) or 🔧 (wrench)
+  - Example: `build(deps): 📦 bump vite to ^7.1.0`
+- ci: ⚙️ (gear)
+  - Example: `ci(actions): ⚙️ add workflow for release`
+- chore: 🔧 (wrench)
+  - Example: `chore: 🔧 update README badges`
+- revert/remove: 🔥 (fire) or ⬅️ (left_arrow)
+  - Example: `fix(api): 🔥 remove deprecated endpoint`
+
+Notes:
+
+- Keep commit headers short (<=72 chars) with the emoji included. Use the body for longer explanations.
+- CI and tooling that parse Conventional Commits should still see the `type` at the start; prefer `type(scope): emoji description` to preserve parsers that look at the beginning of the header.
+- If you are generating changelogs automatically, ensure your changelog tool supports or ignores emojis; most treat them as plain text.
