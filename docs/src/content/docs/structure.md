@@ -59,7 +59,7 @@ description: Overview of the project structure and organization.
 │   ├───CODEOWNERS
 │   ├───FUNDING.yml
 │   ├───PULL_REQUEST_TEMPLATE.md
-│   ├───auto_assign.yml 
+│   ├───auto_assign.yml
 │   ├───dependabot.yml
 │   ├───issue-labeler-config.yml
 │   ├───labeler.yaml
@@ -1810,7 +1810,7 @@ description: Overview of the project structure and organization.
 │       │       │           ├───ControllerIntegrationTest.kt
 │       │       │           ├───ControllerTest.kt
 │       │       │           ├───IntegrationTest.kt
-│       │       │           ├───TestHatchgridApplication.kt
+│       │       │           ├───TestloomifyApplication.kt
 │       │       │           └───UnitTest.kt
 │       │       └───resources/
 │       │           ├───db/
@@ -1958,7 +1958,7 @@ description: Overview of the project structure and organization.
 │   │   │   ├───main/
 │   │   │   │   └───kotlin/
 │   │   │   │       └───com/
-│   │   │   │           ├───hatchgrid/
+│   │   │   │           ├───loomify/
 │   │   │   │           │   └───common/
 │   │   │   │           │       └───...
 │   │   │   │           └───loomify/
@@ -1967,7 +1967,7 @@ description: Overview of the project structure and organization.
 │   │   │   └───test/
 │   │   │       └───kotlin/
 │   │   │           └───com/
-│   │   │               ├───hatchgrid/
+│   │   │               ├───loomify/
 │   │   │               │   └───common/
 │   │   │               │       └───...
 │   │   │               └───loomify/
