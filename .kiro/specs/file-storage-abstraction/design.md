@@ -180,9 +180,10 @@ class QuotaManager(
 
         return when {
             currentUsage + additionalSize > quota.limit -> QuotaCheckResult.EXCEEDED
-            currentUsage + additionalSize > quota.limit * 0.95 -> QuotaCheckResult.WARNING
+            currentUsage + additionalSize > (quota.limit * 95 / 100) -> QuotaCheckResult.WARNING
             else -> QuotaCheckResult.OK
         }
+    }
     }
 
     suspend fun updateUsage(tenantId: String, sizeChange: Long) {
