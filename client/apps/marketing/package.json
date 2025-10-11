@@ -70,7 +70,7 @@
 	"devDependencies": {
 		"@loomify/config": "workspace:*",
 		"@tailwindcss/typography": "^0.5.16",
-		"happy-dom": "^18.0.1",
+		"happy-dom": "^20.0.0",
 		"sharp": "^0.34.3",
 		"tailwind-merge": "^3.3.1",
 		"typescript": "^5.8.3",
