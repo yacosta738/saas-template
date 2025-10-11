@@ -29,6 +29,8 @@ This specification defines the requirements for enhancing the existing authentic
 3. WHEN OIDC tokens are received THEN the system SHALL validate issuer, audience, and signature according to OIDC specifications
 4. WHEN provider-specific scopes are requested THEN the system SHALL map them to internal permissions appropriately
 5. IF authentication fails THEN the system SHALL provide clear error messages without exposing sensitive information
+6. WHEN using the authorization code flow THEN the system SHALL enforce PKCE by generating, storing, and verifying the code_challenge and code_verifier, and SHALL reject flows without valid PKCE.
+7. WHEN handling OAuth2 callbacks THEN the system SHALL validate cryptographically random state and nonce values, binding them to the client session, and SHALL verify state to prevent CSRF and nonce in ID tokens to prevent replay attacks. Failure modes SHALL include clear error messages without leaking secrets.
 
 ### Requirement 3: Advanced JWT and Refresh Token Management
 

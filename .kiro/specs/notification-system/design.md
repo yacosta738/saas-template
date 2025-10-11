@@ -393,3 +393,41 @@ data class EmailProviderConfig(
 - **User-based Limits**: Per-user limits to prevent spam
 - **IP-based Limits**: Additional protection for public APIs
 - **Workspace Quotas**: Prevent workspace-level abuse
+
+#### Security and Encoding Strategy
+
+To prevent XSS and content injection vulnerabilities in `NotificationContent`, the following safeguards are implemented:
+
+1. **Explicit Encoding Rules per Channel**:
+   - **HTML**: All HTML content must be HTML-escaped and sanitized using an allow-list of safe tags and attributes.
+   - **Plain Text**: Strip or escape any HTML content to ensure only plain text is rendered.
+   - **JSON**: All values must be JSON-encoded to prevent injection.
+
+2. **Template Engine Safeguards**:
+   - The chosen template engine must have auto-escape enabled for HTML templates.
+   - Strict variable context typing must be enforced to prevent type confusion.
+
+3. **Validation and Escaping at Render Time**:
+   - All template variables must be validated and escaped during rendering.
+   - Any HTML input must be passed through a sanitizer or rendered only from a vetted allow-list of tags and attributes.
+
+4. **Content Metadata and Enforcement**:
+   - Add metadata/flags to `NotificationContent` indicating whether the content has been sanitized.
+   - Include an enforcement point in the sending pipeline to reject or sanitize unsafely flagged notifications.
+
+5. **Testing**:
+   - Add unit and integration tests to assert encoding and sanitization behavior for each channel.
+   - Ensure tests cover edge cases for all supported content types and channels.
+
+### Compliance & Feedback Loops
+
+- **Unsubscribe Links**: Include unsubscribe links in all user-facing messages and honor per-user preference settings to comply with CAN-SPAM and GDPR.
+- **Encrypted Suppression Lists**: Maintain encrypted suppression lists and automated suppression logic that respects user preferences and consent.
+- **Webhook Endpoints**: Implement provider webhook endpoints to receive bounces/complaints and automatically update suppression lists.
+- **Idempotency and Correlation**: Require idempotency keys on send requests and attach correlation IDs to messages and logs for deduplication and end-to-end tracing.
+- **Data Storage and Retention**:
+  - Store suppression data securely with encryption.
+  - Define retention and expiry policies for suppression data.
+- **Architecture Placement**:
+  - Webhook handlers should process bounces/complaints and update suppression lists.
+  - Idempotency and correlation processing should be enforced in the sending pipeline.

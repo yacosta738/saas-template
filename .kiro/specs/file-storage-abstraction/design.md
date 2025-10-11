@@ -122,7 +122,9 @@ class StorageRouter(
 ) {
     suspend fun getProvider(tenantId: String, fileType: String? = null): StorageProvider {
         val config = tenantConfig.getStorageConfig(tenantId)
-        return providers.first { it.supports(config.preferredType) }
+        return providers.first {
+            it.supports(config.preferredProvider ?: fileType ?: throw IllegalArgumentException("No provider or fileType specified"))
+        }
     }
 
     suspend fun getProviderForKey(key: String): StorageProvider {
@@ -422,13 +424,8 @@ class StorageMetrics(
         .register(meterRegistry)
 
     fun recordUpload(provider: StorageType, duration: Duration, success: Boolean) {
-        uploadCounter.increment(
-            Tags.of(
-                Tag.of("provider", provider.name),
-                Tag.of("success", success.toString())
-            )
-        )
-        uploadTimer.record(duration)
+        meterRegistry.counter("storage.uploads.total", "provider", provider.name, "success", success.toString()).increment()
+        meterRegistry.timer("storage.upload.duration", "provider", provider.name, "success", success.toString()).record(duration)
     }
 }
 ```

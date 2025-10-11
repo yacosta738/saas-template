@@ -47,6 +47,7 @@ The security implementation uses Spring WebFlux's reactive filter chain with cus
 ### 1. Rate Limiting Component
 
 **Interface: `ReactiveRateLimitService`**
+
 ```kotlin
 interface ReactiveRateLimitService {
     fun checkRateLimit(request: ServerHttpRequest, tenantId: String, userId: String?): Mono<RateLimitResult>
@@ -56,12 +57,14 @@ interface ReactiveRateLimitService {
 ```
 
 **Implementation Strategy:**
+
 - Redis-based distributed rate limiting using reactive Redis operations
 - Sliding window algorithm for accurate rate limiting
 - Hierarchical rate limiting: global → tenant → user → endpoint
 - Configurable time windows and limits per tenant
 
 **Key Classes:**
+
 - `RedisReactiveRateLimitService` - Redis-backed implementation
 - `RateLimitFilter` - WebFlux filter for request interception
 - `RateLimitConfig` - Configuration data class
@@ -70,6 +73,7 @@ interface ReactiveRateLimitService {
 ### 2. DDoS Protection Component
 
 **Interface: `DDoSProtectionService`**
+
 ```kotlin
 interface DDoSProtectionService {
     fun analyzeTraffic(request: ServerHttpRequest): Mono<ThreatAssessment>
@@ -80,12 +84,14 @@ interface DDoSProtectionService {
 ```
 
 **Implementation Strategy:**
+
 - Real-time traffic pattern analysis using reactive streams
 - Configurable thresholds for request frequency and patterns
 - Automatic IP blocking with exponential backoff
 - Integration with monitoring systems for alerting
 
 **Key Classes:**
+
 - `ReactiveTrafficAnalyzer` - Pattern detection and analysis
 - `IPBlocklistService` - Manage blocked IP addresses
 - `DDoSProtectionFilter` - Request filtering and blocking
@@ -94,6 +100,7 @@ interface DDoSProtectionService {
 ### 3. Dynamic CORS Management
 
 **Interface: `TenantCorsConfigService`**
+
 ```kotlin
 interface TenantCorsConfigService {
     fun getCorsConfig(tenantId: String): Mono<CorsConfiguration>
@@ -103,12 +110,14 @@ interface TenantCorsConfigService {
 ```
 
 **Implementation Strategy:**
+
 - Tenant-specific CORS configuration stored in database
 - Dynamic configuration updates without restart
 - Integration with Spring WebFlux CORS support
 - Fallback to global CORS configuration
 
 **Key Classes:**
+
 - `TenantAwareCorsConfigurationSource` - Dynamic CORS source
 - `CorsConfigRepository` - Database operations for CORS config
 - `CorsValidationFilter` - Request origin validation
@@ -116,6 +125,7 @@ interface TenantCorsConfigService {
 ### 4. Content Security Policy (CSP)
 
 **Interface: `CSPHeaderService`**
+
 ```kotlin
 interface CSPHeaderService {
     fun generateCSPHeader(request: ServerHttpRequest, tenantId: String): Mono<String>
@@ -125,12 +135,14 @@ interface CSPHeaderService {
 ```
 
 **Implementation Strategy:**
+
 - Context-aware CSP header generation
 - Nonce-based script execution for dynamic content
 - CSP violation reporting and monitoring
 - Different policies for admin vs user interfaces
 
 **Key Classes:**
+
 - `CSPHeaderFilter` - Header injection filter
 - `CSPViolationController` - Violation report endpoint
 - `CSPConfigService` - Policy configuration management
@@ -138,6 +150,7 @@ interface CSPHeaderService {
 ### 5. Input Sanitization
 
 **Interface: `InputSanitizationService`**
+
 ```kotlin
 interface InputSanitizationService {
     fun sanitizeInput(input: String, context: SanitizationContext): Mono<String>
@@ -147,12 +160,14 @@ interface InputSanitizationService {
 ```
 
 **Implementation Strategy:**
+
 - Context-aware sanitization (HTML, JSON, query parameters)
 - OWASP Java HTML Sanitizer integration
 - Reactive validation pipeline
 - Configurable sanitization rules per tenant
 
 **Key Classes:**
+
 - `ReactiveInputSanitizer` - Core sanitization logic
 - `InputSanitizationFilter` - Request/response sanitization
 - `ValidationRulesService` - Manage validation configurations
@@ -161,12 +176,14 @@ interface InputSanitizationService {
 ### 6. SQL Injection Prevention
 
 **Implementation Strategy:**
+
 - Enforce parameterized queries through R2DBC
 - Custom repository base classes with query validation
 - Static analysis integration (SpotBugs, CodeQL)
 - Runtime query pattern monitoring
 
 **Key Classes:**
+
 - `SecureR2dbcRepository` - Base repository with security checks
 - `QueryValidationAspect` - AOP-based query validation
 - `SQLInjectionDetector` - Pattern-based detection
@@ -174,6 +191,7 @@ interface InputSanitizationService {
 ### 7. Secret Management Integration
 
 **Interface: `SecretManagementService`**
+
 ```kotlin
 interface SecretManagementService {
     fun getSecret(secretName: String): Mono<String>
@@ -183,12 +201,14 @@ interface SecretManagementService {
 ```
 
 **Implementation Strategy:**
+
 - Multi-provider support (AWS Secrets Manager, HashiCorp Vault)
 - Reactive secret retrieval with caching
 - Automatic secret rotation handling
 - Fallback mechanisms for high availability
 
 **Key Classes:**
+
 - `AWSSecretsManagerService` - AWS integration
 - `VaultSecretService` - HashiCorp Vault integration
 - `SecretCacheService` - In-memory secure caching
@@ -197,6 +217,7 @@ interface SecretManagementService {
 ### 8. Encryption at Rest
 
 **Interface: `FieldEncryptionService`**
+
 ```kotlin
 interface FieldEncryptionService {
     fun encrypt(plaintext: String, keyId: String): Mono<String>
@@ -206,12 +227,14 @@ interface FieldEncryptionService {
 ```
 
 **Implementation Strategy:**
+
 - Annotation-based field encryption (@Encrypted)
 - AES-256-GCM encryption with key rotation support
 - Integration with R2DBC converters for transparent encryption
 - Key management through external services
 
 **Key Classes:**
+
 - `EncryptedFieldConverter` - R2DBC converter for automatic encryption
 - `KeyManagementService` - Encryption key lifecycle management
 - `EncryptionAspect` - AOP-based field encryption
@@ -220,6 +243,7 @@ interface FieldEncryptionService {
 ### 9. PII Masking and Compliance
 
 **Interface: `PIIMaskingService`**
+
 ```kotlin
 interface PIIMaskingService {
     fun maskPII(data: Any, maskingContext: MaskingContext): Mono<Any>
@@ -229,12 +253,14 @@ interface PIIMaskingService {
 ```
 
 **Implementation Strategy:**
+
 - Pattern-based PII detection (email, phone, SSN, etc.)
 - Context-aware masking strategies (partial, full, tokenization)
 - GDPR compliance features (right to be forgotten, data portability)
 - Audit trail for all PII operations
 
 **Key Classes:**
+
 - `PIIDetectionService` - Pattern matching and ML-based detection
 - `MaskingStrategyFactory` - Different masking approaches
 - `ComplianceAuditService` - GDPR compliance tracking
@@ -243,6 +269,7 @@ interface PIIMaskingService {
 ## Data Models
 
 ### Rate Limiting Configuration
+
 ```kotlin
 @Table("rate_limit_configs")
 data class RateLimitConfig(
@@ -261,6 +288,7 @@ data class RateLimitConfig(
 ```
 
 ### Security Event Log
+
 ```kotlin
 @Table("security_events")
 data class SecurityEvent(
@@ -278,6 +306,7 @@ data class SecurityEvent(
 ```
 
 ### Encryption Key Metadata
+
 ```kotlin
 @Table("encryption_keys")
 data class EncryptionKeyMetadata(
@@ -294,6 +323,7 @@ data class EncryptionKeyMetadata(
 ## Error Handling
 
 ### Security Exception Hierarchy
+
 ```kotlin
 sealed class SecurityException(message: String) : RuntimeException(message)
 class RateLimitExceededException(val retryAfter: Duration) : SecurityException("Rate limit exceeded")
@@ -303,15 +333,36 @@ class EncryptionException(cause: Throwable) : SecurityException("Encryption oper
 ```
 
 ### Global Security Error Handler
+
 ```kotlin
 @Component
 class SecurityErrorHandler : ErrorWebExceptionHandler {
     override fun handle(exchange: ServerWebExchange, ex: Throwable): Mono<Void> {
+        val correlationId = UUID.randomUUID().toString()
+        log.error("Error ID: $correlationId", ex)
+
+        val response = exchange.response
+        response.headers.add("X-Correlation-ID", correlationId)
+
         return when (ex) {
-            is RateLimitExceededException -> handleRateLimit(exchange, ex)
-            is DDoSProtectionException -> handleDDoSBlock(exchange, ex)
-            is InputValidationException -> handleValidation(exchange, ex)
-            else -> handleGenericSecurity(exchange, ex)
+            is RateLimitExceededException -> {
+                response.statusCode = HttpStatus.TOO_MANY_REQUESTS
+                response.headers.add("Retry-After", ex.retryAfter.seconds.toString())
+                response.writeWith(Mono.just(response.bufferFactory().wrap("Rate limit exceeded".toByteArray())))
+            }
+            is DDoSProtectionException -> {
+                response.statusCode = if (ex.blockedUntil.isAfter(Instant.now())) HttpStatus.TOO_MANY_REQUESTS else HttpStatus.FORBIDDEN
+                response.headers.add("Retry-After", Duration.between(Instant.now(), ex.blockedUntil).seconds.toString())
+                response.writeWith(Mono.just(response.bufferFactory().wrap("Request blocked".toByteArray())))
+            }
+            is InputValidationException -> {
+                response.statusCode = HttpStatus.BAD_REQUEST
+                response.writeWith(Mono.just(response.bufferFactory().wrap("Invalid request".toByteArray())))
+            }
+            else -> {
+                response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR
+                response.writeWith(Mono.just(response.bufferFactory().wrap("Internal server error".toByteArray())))
+            }
         }
     }
 }
@@ -320,24 +371,28 @@ class SecurityErrorHandler : ErrorWebExceptionHandler {
 ## Testing Strategy
 
 ### Unit Testing
+
 - **Security Filter Tests**: Mock request/response testing for each security filter
 - **Service Layer Tests**: Test security services with reactive test support
 - **Encryption Tests**: Verify encryption/decryption operations and key rotation
 - **Validation Tests**: Test input sanitization and validation rules
 
 ### Integration Testing
+
 - **Security Chain Tests**: End-to-end security filter chain testing
 - **Database Encryption Tests**: Verify transparent field encryption with R2DBC
 - **Secret Management Tests**: Test integration with external secret services
 - **Multi-tenant Tests**: Verify tenant isolation in security configurations
 
 ### Security Testing
+
 - **Penetration Testing**: Automated security scanning with OWASP ZAP
 - **Rate Limiting Tests**: Load testing to verify rate limiting effectiveness
 - **Input Fuzzing**: Automated fuzzing of input sanitization
 - **Compliance Tests**: Verify GDPR and privacy compliance features
 
 ### Performance Testing
+
 - **Security Overhead Tests**: Measure performance impact of security filters
 - **Encryption Performance**: Benchmark encryption/decryption operations
 - **Rate Limiting Performance**: Test rate limiting under high load
@@ -346,6 +401,7 @@ class SecurityErrorHandler : ErrorWebExceptionHandler {
 ## Configuration
 
 ### Application Configuration
+
 ```yaml
 loomify:
   security:
@@ -371,9 +427,3 @@ loomify:
       default-strategy: "partial"
       audit-enabled: true
 ```
-
-### Security Monitoring Integration
-- **Metrics**: Expose security metrics via Micrometer
-- **Alerting**: Integration with monitoring systems for security events
-- **Dashboards**: Grafana dashboards for security monitoring
-- **Audit Logs**: Structured logging for compliance and forensics

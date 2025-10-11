@@ -53,6 +53,11 @@ The notification system is a comprehensive multi-channel communication platform 
 3. WHEN managing preferences THEN users SHALL be able to set quiet hours for non-urgent notifications
 4. WHEN updating preferences THEN the system SHALL respect user choices immediately for new notifications
 5. IF legal requirements exist THEN the system SHALL enforce mandatory notifications that cannot be disabled
+6. WHEN managing preferences THEN the system SHALL explicitly comply with applicable regulations (e.g., CAN-SPAM, GDPR, PECR) and specify which notification categories they affect.
+7. WHEN managing preferences THEN the system SHALL provide unsubscribe semantics, including per notification type and delivery channel, effective change timelines, confirmation flows, and handling of bounced/invalid addresses.
+8. WHEN managing preferences THEN the system SHALL define precedence rules for workspace-mandated notifications versus user opt-outs, ensuring mandatory notifications are logged and limited to legally required cases.
+9. WHEN managing preferences THEN the system SHALL store per-channel consent with timestamps, source, versioned policy ID, and an audit trail for consent changes and mandatory flags.
+10. WHEN managing preferences THEN the system SHALL enforce preference changes immediately for new notifications and define retention/expiry rules for consent records.
 
 ### Requirement 5
 

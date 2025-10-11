@@ -101,8 +101,24 @@ interface AuthenticationService {
 ```kotlin
 interface OAuth2ProviderManager {
     suspend fun getAvailableProviders(workspaceId: WorkspaceId): List<OAuth2Provider>
+
+    /**
+     * Initiates the OAuth2 authorization flow.
+     * - Generates and returns a code_challenge (S256) and stores the code_verifier server-side.
+     * - Generates and stores state and nonce values, bound to the workspace/session.
+     * - Ensures state and nonce are time-limited and checked to prevent CSRF/replay attacks.
+     */
     suspend fun initiateOAuth2Flow(provider: OAuth2Provider, workspaceId: WorkspaceId): OAuth2FlowResult
-    suspend fun handleCallback(provider: OAuth2Provider, code: String, state: String): OAuth2CallbackResult
+
+    /**
+     * Handles the OAuth2 callback.
+     * - Validates the state and nonce values against stored entries.
+     * - Verifies the returned code against the stored code_verifier (S256).
+     * - Exchanges the authorization code for tokens upon successful validation.
+     * - Includes failure paths for mismatches or invalid entries.
+     */
+    suspend fun handleCallback(provider: OAuth2Provider, code: String, state: String, nonce: String): OAuth2CallbackResult
+
     suspend fun mapProviderAttributes(provider: OAuth2Provider, attributes: Map<String, Any>): UserAttributes
 }
 ```
@@ -644,12 +660,22 @@ sealed class AuthorizationError(
 
 ```
 default-src 'self';
-script-src 'self' 'unsafe-inline' https://apis.google.com;
-style-src 'self' 'unsafe-inline';
+script-src 'self' 'nonce-{generated-nonce}' https://apis.google.com;
+style-src 'self' 'nonce-{generated-nonce}';
 img-src 'self' data: https:;
-connect-src 'self' https://api.loomify.com;
-frame-ancestors 'none';
+connect-src 'self' https://api.loomify.com https://subdomain.example.com;
+report-uri https://csp-report.example.com;
+report-to csp-endpoint;
 ```
+
+**Implementation Notes**
+
+- **Nonce-based Policies**: All inline scripts and styles must include a server-generated nonce (`{generated-nonce}`).
+- **Hash-based Policies**: Alternatively, compute and apply hashes for static inline scripts/styles during the build process.
+- **Reporting**: Configure the `report-uri` and `report-to` endpoints to collect CSP violation reports. Ensure the reporting endpoint is secure and monitored.
+- **Build/Runtime Updates**:
+  - Inject nonces dynamically for inline scripts/styles at runtime.
+  - Update the build pipeline to compute hashes for static inline scripts/styles if hash-based policies are chosen.
 
 **Additional Security Headers**
 

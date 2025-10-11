@@ -547,14 +547,26 @@ class WebhookProcessor(
 ) {
 
     suspend fun processWebhook(provider: ProviderType, payload: String, signature: String): WebhookProcessingResult {
-        // Generate idempotency key from payload
-        val idempotencyKey = generateIdempotencyKey(payload, signature)
+        // Generate idempotency key from provider event ID
+        val idempotencyKey = generateIdempotencyKey(provider, extractEventId(payload), extractWorkspaceId(payload))
 
         // Check if already processed
         val existingEvent = eventRepository.findByIdempotencyKey(idempotencyKey)
         if (existingEvent != null && existingEvent.status == WebhookStatus.PROCESSED) {
             return WebhookProcessingResult.alreadyProcessed(existingEvent.id)
         }
+
+        // Extract provider-specific resource IDs
+        val customerId = extractCustomerId(payload)
+        val subscriptionId = extractSubscriptionId(payload)
+
+        // Lookup workspace ID in the database using provider and resource IDs
+        val workspaceId = workspaceRepository.findWorkspaceIdByProviderAndResourceIds(provider, customerId, subscriptionId)
+            ?: run {
+                // Log the mismatch and mark the webhook as invalid
+                logger.error("Invalid webhook: Unable to resolve workspace for provider=$provider, customerId=$customerId, subscriptionId=$subscriptionId")
+                return WebhookProcessingResult.invalid("Unable to resolve workspace")
+            }
 
         // Create or update webhook event
         val webhookEvent = existingEvent?.copy(
@@ -563,7 +575,7 @@ class WebhookProcessor(
             lastRetryAt = Instant.now()
         ) ?: WebhookEvent(
             id = WebhookEventId.generate(),
-            workspaceId = extractWorkspaceId(payload), // Extract from payload
+            workspaceId = workspaceId, // Resolved from trusted DB lookup
             provider = provider,
             eventType = extractEventType(payload),
             payload = payload,

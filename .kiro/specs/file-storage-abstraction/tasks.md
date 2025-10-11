@@ -11,6 +11,10 @@
   - [ ] 2.1 Create FileMetadata entity with R2DBC annotations
     - Define table structure with tenant isolation, file variants, and audit fields
     - Add indexes for tenant_id, storage_key, and uploaded_at for query performance
+    - Add a unique constraint on (tenant_id, storage_key)
+    - Add a `version` field annotated with `@Version` for optimistic locking
+    - Add a `deleted` flag for soft-delete support
+    - Update repository queries to filter out soft-deleted rows
     - _Requirements: 1.2, 7.1_
 
   - [ ] 2.2 Create TenantStorageConfig entity
@@ -38,6 +42,14 @@
   - [ ] 3.1 Implement LocalFileSystemProvider class
     - Create directory structure based on tenant ID for isolation
     - Implement upload, download, delete, and exists operations
+      - Sanitize incoming filenames (strip null-bytes, disallow '..' segments)
+      - Construct a safe tenant root and resolve paths with `realpath`, verifying they remain inside the tenant directory
+      - Reject paths resolving outside the tenant directory
+      - Detect and reject symlinks using `lstat`/`isSymbolicLink` before accessing files
+      - Implement atomic writes by writing to a temp file, fsyncing the file and directory, then renaming to the final name
+      - Create directories with restrictive permissions (0o700) and set file permissions to 0o600
+      - Avoid following symlinks when creating or removing files
+      - Apply the same `realpath`/verify/symlink checks to download, delete, and exists operations
     - Handle file metadata extraction and storage key generation
     - _Requirements: 1.1, 1.2, 2.1_
 
@@ -68,6 +80,12 @@
     - Register available storage providers at startup
     - Monitor provider health and availability status
     - Handle graceful degradation when providers fail
+    - Implement DB transactions (or explicit row locks like SELECT FOR UPDATE) around quota reads and increments
+    - Use atomic increment operations where supported
+    - Update tenant usage inside the same transaction as the upload metadata to avoid races
+    - Include all file variants (original, thumbnails, derived) in the same usage calculation and persist their sizes atomically
+    - Prevent double-counting on retries by recording a unique upload_id (or idempotency key) for each upload
+    - Ensure rollback paths subtract only committed sizes to maintain consistency
     - _Requirements: 2.3, 8.2, 8.3_
 
   - [ ]* 4.3 Write integration tests for routing logic
@@ -91,6 +109,11 @@
   - [ ] 5.3 Add quota notification system
     - Send alerts when quota thresholds are reached
     - Create quota usage reports for tenant administrators
+    - Require virus scanning as the first step in the pipeline
+    - Mandate idempotent processing by persisting per-file status markers (e.g., scanned, thumb-generated, compressed)
+    - Use an outbox pattern with intent events and retry with exponential backoff
+    - Implement reactive/asynchronous streams for orchestration and failure handling
+    - Ensure retries reprocess only incomplete steps
     - _Requirements: 4.3, 8.4_
 
   - [ ]* 5.4 Write unit tests for quota calculations
@@ -199,6 +222,11 @@
     - Generate alerts for quota violations and security events
     - Monitor system performance and provider failures
     - Create operational dashboards for system health
+    - Execute all AWS S3/Azure SDK calls on a boundedElastic scheduler (or equivalent) to avoid blocking event loops
+    - Configure per-operation timeouts and retry policies with sensible defaults
+    - Implement presigned URL generation and explicit handling/retries for S3-specific transient errors
+    - Default server-side encryption to SSE-KMS (with the ability to opt into SSE-S3)
+    - Document how to pass KMS key IDs and related headers/params
     - _Requirements: 7.2, 8.3, 8.4_
 
   - [ ]* 9.4 Write monitoring tests

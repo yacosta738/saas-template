@@ -11,6 +11,9 @@
     - Implement `ReactiveRateLimitService` interface with Redis backend
     - Create `RateLimitConfig` data class and repository operations
     - Write `RateLimitFilter` for WebFlux filter chain integration
+    - Define a trusted proxy chain configuration for IP extraction (parse `X-Forwarded-For` and fallback to remote address)
+    - Use Redis `EVAL`/`EVALSHA` Lua scripts for atomic token-bucket/sliding-window operations
+    - Ensure all Redis calls are non-blocking/reactive and include script loading/sha caching
     - _Requirements: 1.1, 1.2, 1.3_
 
   - [ ] 2.2 Add rate limiting configuration and metrics
@@ -53,8 +56,12 @@
 
   - [ ] 4.2 Add CORS validation and security headers
     - Implement CORS validation filter with tenant-specific rules
-    - Create CORS violation logging and monitoring
-    - Add proper CORS security headers (credentials, methods, headers)
+    - Validate incoming `Origin` against a tenant-specific allowlist from `TenantCorsConfigService`
+    - Deny requests with invalid `Origin`
+    - Always set the `Vary: Origin` header
+    - Never return `Access-Control-Allow-Origin: *` when `Access-Control-Allow-Credentials` is true
+    - Explicitly return only allowed methods and headers per tenant (no wildcards)
+    - Log and monitor CORS violations with tenant context
     - _Requirements: 3.4, 3.5_
 
   - [ ]* 4.3 Write CORS management tests
@@ -142,6 +149,16 @@
 - [ ] 9. Implement encryption at rest system
   - [ ] 9.1 Create field encryption service and annotations
     - Implement `FieldEncryptionService` with AES-256-GCM encryption
+      - Use a cryptographically secure per-record random nonce (12 bytes recommended)
+      - Persist nonce and authentication tag alongside ciphertext
+      - Verify integrity during decryption
+    - Implement envelope encryption:
+      - Generate a unique data-encryption-key (DEK) per record or logical grouping
+      - Wrap/unwrap DEKs with KMS/Vault master keys
+      - Store only the wrapped DEK and a key-version identifier
+    - Use secure RNG for nonces and DEKs
+    - Include key-version metadata and define a rotation strategy
+    - Ensure all comparisons and error paths avoid leaking secrets
     - Create `@Encrypted` annotation for marking sensitive fields
     - Write `EncryptedFieldConverter` for R2DBC transparent encryption
     - _Requirements: 8.1, 8.2, 8.4_
