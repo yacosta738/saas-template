@@ -123,11 +123,10 @@
 
 - [ ] 6. Create file processing pipeline
   - [ ] 6.1 Implement FileProcessor interface and orchestrator
-    - Define processing pipeline for thumbnails, compression, and virus scanning
+    - Define processing pipeline: virus scanning -> thumbnails -> compression (scan first)
     - Create asynchronous processing with reactive streams
-    - Handle processing failures and retry logic
+    - Handle processing failures with idempotency keys and transactional outbox retries
     - _Requirements: 6.1, 6.2, 6.4_
-
   - [ ] 6.2 Build thumbnail generation processor
     - Generate multiple thumbnail sizes for image files
     - Support common image formats (JPEG, PNG, WebP)
