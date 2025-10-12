@@ -172,7 +172,8 @@ class FileProcessingOrchestrator(
 @Component
 class QuotaManager(
     private val quotaRepository: QuotaRepository,
-    private val usageRepository: UsageRepository
+    private val usageRepository: UsageRepository,
+    private val quotaEventPublisher: QuotaEventPublisher
 ) {
     suspend fun checkQuota(tenantId: String, additionalSize: Long): QuotaCheckResult {
         val quota = quotaRepository.findByTenantId(tenantId)
@@ -183,7 +184,6 @@ class QuotaManager(
             currentUsage + additionalSize > (quota.limit * 95 / 100) -> QuotaCheckResult.WARNING
             else -> QuotaCheckResult.OK
         }
-    }
     }
 
     suspend fun updateUsage(tenantId: String, sizeChange: Long) {
